@@ -29,12 +29,16 @@ class MyHomePage extends StatelessWidget {
         backgroundColor: Colors.blue,
         expandedBackgroundColor: Colors.black,
         children: [
-          SpeedDialChild(child: Icon(Icons.close),onPressed: (){},),
-          SpeedDialChild(child: Icon(Icons.pending),onPressed: (){},),
-        ],
-        labels: [
-          Text('Test'),
-          Text('Another Test'),
+          SpeedDialChild(
+            child: Icon(Icons.close),
+            label: Text('Test'),
+            onPressed: () {},
+          ),
+          SpeedDialChild(
+            child: Icon(Icons.pending),
+            label: Text('Another Test'),
+            onPressed: () {},
+          ),
         ],
       ),
     );

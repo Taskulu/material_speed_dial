@@ -7,7 +7,6 @@ import 'animated_fab.dart';
 class SpeedDial extends StatefulWidget {
   final Widget? child, expandedChild;
   final List<SpeedDialChild> children;
-  final List<Widget> labels;
   final Color? backgroundColor,
       expandedBackgroundColor,
       foregroundColor,
@@ -20,7 +19,6 @@ class SpeedDial extends StatefulWidget {
     this.child,
     this.expandedChild,
     this.children = const [],
-    this.labels = const [],
     this.backgroundColor,
     this.expandedBackgroundColor,
     this.foregroundColor,
@@ -145,7 +143,7 @@ class _SpeedDialState extends State<SpeedDial>
                     child: AnimatedChildren(
                       animation: _controller,
                       children: widget.children,
-                      labels: widget.labels,
+                      close: _close,
                     ),
                   )
                 ],

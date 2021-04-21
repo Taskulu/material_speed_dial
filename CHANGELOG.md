@@ -1,3 +1,8 @@
+## [0.0.4]
+
+* Improved API
+* Fixed close issue with tapping on child
+
 ## [0.0.3]
 
 * Bug fixes

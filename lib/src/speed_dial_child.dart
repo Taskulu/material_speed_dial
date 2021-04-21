@@ -1,26 +1,14 @@
 import 'package:flutter/material.dart';
 
-class SpeedDialChild extends StatelessWidget {
+class SpeedDialChild {
   final VoidCallback? onPressed;
-  final Widget? child;
+  final Widget? child, label;
   final Color? backgroundColor, foregroundColor;
 
-  const SpeedDialChild(
-      {Key? key,
-      this.onPressed,
+  SpeedDialChild(
+      {this.onPressed,
       this.child,
+      this.label,
       this.backgroundColor,
-      this.foregroundColor})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return FloatingActionButton(
-      onPressed: onPressed,
-      child: child,
-      mini: true,
-      backgroundColor: backgroundColor,
-      foregroundColor: foregroundColor,
-    );
-  }
+      this.foregroundColor});
 }
