@@ -6,7 +6,6 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -24,6 +23,7 @@ class MyHomePage extends StatelessWidget {
         title: Text('Material Speed Dial Demo'),
       ),
       floatingActionButton: SpeedDial(
+        invokeAfterClosing: true,
         child: Icon(Icons.add),
         expandedChild: Icon(Icons.share),
         backgroundColor: Colors.blue,

@@ -1,6 +1,6 @@
 name: material_speed_dial
 description: A speed dial package for Flutter with material design.
-version: 0.0.4
+version: 0.0.5
 homepage: https://github.com/Taskulu/material_speed_dial.git
 
 environment:

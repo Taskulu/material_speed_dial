@@ -5,10 +5,11 @@ class SpeedDialChild {
   final Widget? child, label;
   final Color? backgroundColor, foregroundColor;
 
-  SpeedDialChild(
-      {this.onPressed,
-      this.child,
-      this.label,
-      this.backgroundColor,
-      this.foregroundColor});
+  SpeedDialChild({
+    this.onPressed,
+    this.child,
+    this.label,
+    this.backgroundColor,
+    this.foregroundColor,
+  });
 }

@@ -4,13 +4,15 @@ import 'speed_dial_child.dart';
 class AnimatedChildren extends StatelessWidget {
   final Animation<double> animation;
   final List<SpeedDialChild> children;
-  final VoidCallback close;
+  final Future Function() close;
+  final bool invokeAfterClosing;
 
   const AnimatedChildren({
     Key? key,
     required this.animation,
     required this.children,
     required this.close,
+    required this.invokeAfterClosing,
   }) : super(key: key);
 
   @override
@@ -38,8 +40,8 @@ class AnimatedChildren extends StatelessWidget {
                       width: 56,
                       child: Center(
                           child: FloatingActionButton(
-                        onPressed: () {
-                          close();
+                        onPressed: () async {
+                          invokeAfterClosing ? await close() : close();
                           children[i].onPressed?.call();
                         },
                         child: children[i].child,

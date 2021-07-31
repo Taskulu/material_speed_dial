@@ -14,17 +14,23 @@ class SpeedDial extends StatefulWidget {
       overlayColor;
   final Duration animationDuration;
 
+  /// onPressed for SpeedDial will be called after completely closing the SpeedDial.
+  /// Enabling it will prevent SpeedDial from showing between navigation transitions
+  /// or when SnackBar is being shown.
+  final bool invokeAfterClosing;
+
   const SpeedDial({
     Key? key,
     this.child,
     this.expandedChild,
-    this.children = const [],
     this.backgroundColor,
     this.expandedBackgroundColor,
     this.foregroundColor,
     this.expandedForegroundColor,
-    this.animationDuration = const Duration(milliseconds: 300),
     this.overlayColor,
+    this.children = const [],
+    this.invokeAfterClosing = false,
+    this.animationDuration = const Duration(milliseconds: 300),
   }) : super(key: key);
 
   @override
@@ -47,10 +53,10 @@ class _SpeedDialState extends State<SpeedDial>
 
   @override
   void dispose() {
-    super.dispose();
     _controller.dispose();
     _overlayEntry?.remove();
     _overlayEntry?.dispose();
+    super.dispose();
   }
 
   @override
@@ -84,17 +90,18 @@ class _SpeedDialState extends State<SpeedDial>
     _controller.animateTo(1);
   }
 
-  _close() {
+  Future<bool> _close() async {
     if (!_isOpen) {
-      return;
+      return false;
     }
-    _controller.animateTo(0).whenComplete(() {
+    await _controller.animateTo(0).whenComplete(() {
       _overlayEntry?.remove();
       _overlayEntry = null;
       setState(() {
         _isOpen = false;
       });
     });
+    return true;
   }
 
   OverlayEntry _buildOverlay() {
@@ -139,10 +146,13 @@ class _SpeedDialState extends State<SpeedDial>
                     top: 0,
                     bottom:
                         MediaQuery.of(context).size.height - position.dy + 4,
-                    right: MediaQuery.of(context).size.width - position.dx - box.size.width,
+                    right: MediaQuery.of(context).size.width -
+                        position.dx -
+                        box.size.width,
                     child: AnimatedChildren(
                       animation: _controller,
                       children: widget.children,
+                      invokeAfterClosing: widget.invokeAfterClosing,
                       close: _close,
                     ),
                   )
