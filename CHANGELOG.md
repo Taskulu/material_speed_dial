@@ -1,3 +1,8 @@
+## [0.0.6]
+
+* Improved support for RTL
+* Expanded tap region
+
 ## [0.0.5]
 
 * Added invokeAfterClosing

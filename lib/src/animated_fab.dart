@@ -9,17 +9,17 @@ class AnimatedFAB extends StatelessWidget {
   final VoidCallback? onClosePressed;
   final Widget? child, expandedChild;
 
-  const AnimatedFAB(
-      {Key? key,
-      required this.animation,
-      this.backgroundColor,
-      this.expandedBackgroundColor,
-      this.foregroundColor,
-      this.expandedForegroundColor,
-      this.onClosePressed,
-      this.child,
-      this.expandedChild})
-      : super(key: key);
+  const AnimatedFAB({
+    Key? key,
+    required this.animation,
+    this.backgroundColor,
+    this.expandedBackgroundColor,
+    this.foregroundColor,
+    this.expandedForegroundColor,
+    this.onClosePressed,
+    this.child,
+    this.expandedChild,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

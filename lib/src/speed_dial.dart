@@ -108,11 +108,17 @@ class _SpeedDialState extends State<SpeedDial>
     RenderBox? box = _key.currentContext?.findRenderObject() as RenderBox;
     Offset position = box.localToGlobal(Offset.zero);
 
-    final overlayBackgroundColorTween = ColorTween(
-        begin: Colors.transparent,
-        end: widget.overlayColor ?? Colors.black.withOpacity(0.5));
+    final overlayBackgroundColorTween =
+        ColorTween(end: widget.overlayColor ?? Colors.black.withOpacity(0.5));
     final _animation =
         CurvedAnimation(parent: _controller, curve: Curves.easeInOutCubic);
+
+    double? left, right;
+    if (Directionality.of(context) == TextDirection.ltr) {
+      right = MediaQuery.of(context).size.width - position.dx - box.size.width;
+    } else {
+      left = position.dx;
+    }
 
     return OverlayEntry(
         builder: (context) => Material(
@@ -123,7 +129,7 @@ class _SpeedDialState extends State<SpeedDial>
                     onTap: _close,
                     child: AnimatedBuilder(
                       animation: _animation,
-                      builder: (context, _) => Container(
+                      builder: (_, __) => Container(
                         color:
                             overlayBackgroundColorTween.lerp(_animation.value),
                       ),
@@ -146,9 +152,8 @@ class _SpeedDialState extends State<SpeedDial>
                     top: 0,
                     bottom:
                         MediaQuery.of(context).size.height - position.dy + 4,
-                    right: MediaQuery.of(context).size.width -
-                        position.dx -
-                        box.size.width,
+                    left: left,
+                    right: right,
                     child: AnimatedChildren(
                       animation: _controller,
                       children: widget.children,

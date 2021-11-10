@@ -21,36 +21,45 @@ class AnimatedChildren extends StatelessWidget {
       animation: animation,
       builder: (context, _) => Column(
         children: List.generate(children.length, (i) => i).map((i) {
+          final speedDialChild = children[i];
           final curvedAnimation = CurvedAnimation(
               parent: animation,
               curve: Interval(((children.length - 1 - i) / children.length), 1,
                   curve: Curves.easeInOutCubic));
+
+          onPressed() async {
+            invokeAfterClosing ? await close() : close();
+            speedDialChild.onPressed?.call();
+          }
+
           return Padding(
             padding: const EdgeInsets.only(bottom: 8),
-            child: Row(
-              children: [
-                Opacity(
-                  opacity: curvedAnimation.value,
-                  child: Center(child: children[i].label),
-                ),
-                SizedBox(width: 16),
-                ScaleTransition(
-                  scale: curvedAnimation,
-                  child: SizedBox(
+            child: GestureDetector(
+              behavior: HitTestBehavior.translucent,
+              onTap: onPressed,
+              child: Row(
+                children: [
+                  Opacity(
+                    opacity: curvedAnimation.value,
+                    child: Center(child: speedDialChild.label),
+                  ),
+                  SizedBox(width: 16),
+                  ScaleTransition(
+                    scale: curvedAnimation,
+                    child: Container(
                       width: 56,
-                      child: Center(
-                          child: FloatingActionButton(
-                        onPressed: () async {
-                          invokeAfterClosing ? await close() : close();
-                          children[i].onPressed?.call();
-                        },
-                        child: children[i].child,
-                        foregroundColor: children[i].foregroundColor,
-                        backgroundColor: children[i].backgroundColor,
+                      alignment: Alignment.center,
+                      child: FloatingActionButton(
+                        onPressed: onPressed,
+                        child: speedDialChild.child,
+                        foregroundColor: speedDialChild.foregroundColor,
+                        backgroundColor: speedDialChild.backgroundColor,
                         mini: true,
-                      ))),
-                ),
-              ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           );
         }).toList(),
