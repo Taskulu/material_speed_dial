@@ -1,3 +1,9 @@
+## [0.0.7]
+
+* Made state public
+* Added flutter_lints
+* Updated README
+
 ## [0.0.6]
 
 * Improved support for RTL

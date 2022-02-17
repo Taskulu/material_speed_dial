@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'speed_dial_child.dart';
 import 'animated_children.dart';
@@ -34,12 +33,12 @@ class SpeedDial extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _SpeedDialState createState() => _SpeedDialState();
+  SpeedDialState createState() => SpeedDialState();
 }
 
-class _SpeedDialState extends State<SpeedDial>
+class SpeedDialState extends State<SpeedDial>
     with SingleTickerProviderStateMixin {
-  GlobalKey _key = GlobalKey();
+  final _key = GlobalKey();
   bool _isOpen = false;
   OverlayEntry? _overlayEntry;
   late AnimationController _controller;
@@ -60,18 +59,16 @@ class _SpeedDialState extends State<SpeedDial>
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Opacity(
-      opacity: _isOpen ? 0 : 1,
-      child: FloatingActionButton(
-        key: _key,
-        onPressed: _open,
-        child: widget.child,
-        foregroundColor: widget.foregroundColor,
-        backgroundColor: widget.backgroundColor,
-      ),
-    );
-  }
+  Widget build(BuildContext context) => Opacity(
+        opacity: _isOpen ? 0 : 1,
+        child: FloatingActionButton(
+          key: _key,
+          onPressed: _open,
+          child: widget.child,
+          foregroundColor: widget.foregroundColor,
+          backgroundColor: widget.backgroundColor,
+        ),
+      );
 
   bool get isOpen => _isOpen;
 
@@ -121,48 +118,47 @@ class _SpeedDialState extends State<SpeedDial>
     }
 
     return OverlayEntry(
-        builder: (context) => Material(
-              type: MaterialType.transparency,
-              child: Stack(
-                children: [
-                  GestureDetector(
-                    onTap: _close,
-                    child: AnimatedBuilder(
-                      animation: _animation,
-                      builder: (_, __) => Container(
-                        color:
-                            overlayBackgroundColorTween.lerp(_animation.value),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                      top: position.dy,
-                      left: position.dx,
-                      child: AnimatedFAB(
-                        animation: _animation,
-                        expandedChild: widget.expandedChild,
-                        backgroundColor: widget.backgroundColor,
-                        child: widget.child,
-                        expandedBackgroundColor: widget.expandedBackgroundColor,
-                        foregroundColor: widget.foregroundColor,
-                        expandedForegroundColor: widget.expandedForegroundColor,
-                        onClosePressed: _close,
-                      )),
-                  Positioned(
-                    top: 0,
-                    bottom:
-                        MediaQuery.of(context).size.height - position.dy + 4,
-                    left: left,
-                    right: right,
-                    child: AnimatedChildren(
-                      animation: _controller,
-                      children: widget.children,
-                      invokeAfterClosing: widget.invokeAfterClosing,
-                      close: _close,
-                    ),
-                  )
-                ],
+      builder: (context) => Material(
+        type: MaterialType.transparency,
+        child: Stack(
+          children: [
+            GestureDetector(
+              onTap: _close,
+              child: AnimatedBuilder(
+                animation: _animation,
+                builder: (_, __) => Container(
+                  color: overlayBackgroundColorTween.lerp(_animation.value),
+                ),
               ),
-            ));
+            ),
+            Positioned(
+                top: position.dy,
+                left: position.dx,
+                child: AnimatedFAB(
+                  animation: _animation,
+                  expandedChild: widget.expandedChild,
+                  backgroundColor: widget.backgroundColor,
+                  child: widget.child,
+                  expandedBackgroundColor: widget.expandedBackgroundColor,
+                  foregroundColor: widget.foregroundColor,
+                  expandedForegroundColor: widget.expandedForegroundColor,
+                  onClosePressed: _close,
+                )),
+            Positioned(
+              top: 0,
+              bottom: MediaQuery.of(context).size.height - position.dy + 4,
+              left: left,
+              right: right,
+              child: AnimatedChildren(
+                animation: _controller,
+                children: widget.children,
+                invokeAfterClosing: widget.invokeAfterClosing,
+                close: _close,
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 }

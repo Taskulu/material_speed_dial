@@ -1,14 +1,59 @@
 # material_speed_dial
 
-A new Flutter project.
+A simple Material speed dial.
 
-## Getting Started
+## Preview
 
-This project is a starting point for a Dart
-[package](https://flutter.dev/developing-packages/),
-a library module containing code that can be shared easily across
-multiple Flutter or Dart projects.
+![Preview](./arts/demo.gif)
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+## Usage
+
+1. Add to your dependencies
+
+```yaml
+dependencies:
+  material_speed_dial: 0.0.7
+```
+
+2. Add to your widget tree
+
+```dart
+class MyHomePage extends StatelessWidget {
+  final _key = GlobalKey<SpeedDialState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      floatingActionButton: SpeedDial(
+        key: _key,
+        invokeAfterClosing: true,
+        child: Icon(Icons.add),
+        expandedChild: Icon(Icons.share),
+        backgroundColor: Colors.blue,
+        expandedBackgroundColor: Colors.black,
+        children: [
+          SpeedDialChild(
+            child: Icon(Icons.close),
+            label: Text('Test'),
+            onPressed: () {},
+          ),
+          SpeedDialChild(
+            child: Icon(Icons.pending),
+            label: Text('Another Test'),
+            onPressed: () {},
+          ),
+        ],
+      ),
+    );
+  }
+}
+```
+
+3. Check for state or toggle
+
+```dart
+final isOpen = _key.currentState.isOpen;
+```
+```dart
+_key.currentState.toggle();
+```

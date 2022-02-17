@@ -16,56 +16,55 @@ class AnimatedChildren extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: animation,
-      builder: (context, _) => Column(
-        children: List.generate(children.length, (i) => i).map((i) {
-          final speedDialChild = children[i];
-          final curvedAnimation = CurvedAnimation(
-              parent: animation,
-              curve: Interval(((children.length - 1 - i) / children.length), 1,
-                  curve: Curves.easeInOutCubic));
+  Widget build(BuildContext context) => AnimatedBuilder(
+        animation: animation,
+        builder: (context, _) => Column(
+          children: List.generate(children.length, (i) => i).map((i) {
+            final speedDialChild = children[i];
+            final curvedAnimation = CurvedAnimation(
+                parent: animation,
+                curve: Interval(
+                    ((children.length - 1 - i) / children.length), 1,
+                    curve: Curves.easeInOutCubic));
 
-          onPressed() async {
-            invokeAfterClosing ? await close() : close();
-            speedDialChild.onPressed?.call();
-          }
+            onPressed() async {
+              invokeAfterClosing ? await close() : close();
+              speedDialChild.onPressed?.call();
+            }
 
-          return Padding(
-            padding: const EdgeInsets.only(bottom: 8),
-            child: GestureDetector(
-              behavior: HitTestBehavior.translucent,
-              onTap: onPressed,
-              child: Row(
-                children: [
-                  Opacity(
-                    opacity: curvedAnimation.value,
-                    child: Center(child: speedDialChild.label),
-                  ),
-                  SizedBox(width: 16),
-                  ScaleTransition(
-                    scale: curvedAnimation,
-                    child: Container(
-                      width: 56,
-                      alignment: Alignment.center,
-                      child: FloatingActionButton(
-                        onPressed: onPressed,
-                        child: speedDialChild.child,
-                        foregroundColor: speedDialChild.foregroundColor,
-                        backgroundColor: speedDialChild.backgroundColor,
-                        mini: true,
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onTap: onPressed,
+                child: Row(
+                  children: [
+                    Opacity(
+                      opacity: curvedAnimation.value,
+                      child: Center(child: speedDialChild.label),
+                    ),
+                    const SizedBox(width: 16),
+                    ScaleTransition(
+                      scale: curvedAnimation,
+                      child: Container(
+                        width: 56,
+                        alignment: Alignment.center,
+                        child: FloatingActionButton(
+                          onPressed: onPressed,
+                          child: speedDialChild.child,
+                          foregroundColor: speedDialChild.foregroundColor,
+                          backgroundColor: speedDialChild.backgroundColor,
+                          mini: true,
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          );
-        }).toList(),
-        crossAxisAlignment: CrossAxisAlignment.end,
-        mainAxisAlignment: MainAxisAlignment.end,
-      ),
-    );
-  }
+            );
+          }).toList(),
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.end,
+        ),
+      );
 }

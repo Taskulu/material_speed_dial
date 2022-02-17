@@ -5,7 +5,7 @@ class SpeedDialChild {
   final Widget? child, label;
   final Color? backgroundColor, foregroundColor;
 
-  SpeedDialChild({
+  const SpeedDialChild({
     this.onPressed,
     this.child,
     this.label,
